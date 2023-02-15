@@ -52,7 +52,7 @@ class MyAppState extends State<MyApp> {
             FilledButton(onPressed: () {
               _stopWatchTimer.reset();
             }, child: Text("Reset")),
-            Text(_stopWatchTimer.elapsedMilliseconds.toString()),
+            Text(_stopWatchTimer.elapsed.inSeconds.toString()),
           ],
         ),
       ),
