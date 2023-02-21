@@ -74,6 +74,8 @@ class MyAppState extends State<MyApp> {
                     Text(_stopWatchTimer.elapsed.minutesForStopWatch().toString()),
                     Text(":"),
                     Text(_stopWatchTimer.elapsed.secondsForStopWatch().toString()),
+                    Text(":"),
+                    Text(_stopWatchTimer.elapsed.millisecondsForStopWatch().toString())
                   ],
                 )
               ],
