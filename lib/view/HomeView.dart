@@ -1,38 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stopwatch/StopWatchUtil.dart';
-
-class StopWatchTheme extends ChangeNotifier {
-  ThemeData current = ThemeData.light();
-  bool _isDark = false;
-
-  void toggle() {
-    _isDark = !_isDark;
-    current = _isDark ? ThemeData.dark() : ThemeData.light();
-    notifyListeners();
-  }
-}
-
-class StopWatchState extends ChangeNotifier {
-  final Stopwatch _stopWatchTimer = Stopwatch();
-
-  void startClock() {
-    _stopWatchTimer.start();
-    Timer.periodic(const Duration(milliseconds: 30), (timer) {
-      notifyListeners();
-    });
-  }
-
-  void stopClock() {
-    _stopWatchTimer.stop();
-  }
-
-  void resetClock() {
-    _stopWatchTimer.reset();
-  }
-}
+import 'package:stopwatch/model/StopWatchModel.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -66,13 +34,13 @@ class MyApp extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(state._stopWatchTimer.elapsed.hoursForStopWatch().toString().padLeft(2, "0")),
+                                Text(Provider.of<StopWatchState>(context, listen: false).getHours()),
                                 Text(":"),
-                                Text(state._stopWatchTimer.elapsed.minutesForStopWatch().toString().padLeft(2, "0")),
+                                Text(Provider.of<StopWatchState>(context, listen: false).getMinutes()),
                                 Text(":"),
-                                Text(state._stopWatchTimer.elapsed.secondsForStopWatch().toString().padLeft(2, "0")),
+                                Text(Provider.of<StopWatchState>(context, listen: false).getSeconds()),
                                 Text(":"),
-                                Text(state._stopWatchTimer.elapsed.millisecondsForStopWatch().toString().padLeft(4, "0"))
+                                Text(Provider.of<StopWatchState>(context, listen: false).getMilliseconds()),
                               ],
                             ),
                           ],
