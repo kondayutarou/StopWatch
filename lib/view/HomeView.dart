@@ -34,73 +34,56 @@ class StopWatchState extends ChangeNotifier {
   }
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<StatefulWidget> createState() => MyAppState();
-}
-
-class MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(create: (_) => StopWatchTheme(),
-    child: Consumer<StopWatchTheme>(
-      builder: (context, theme, _) {
-        return MaterialApp(
-          theme: theme.current,
-          home: Scaffold(
-            appBar: AppBar(),
-            body: ChangeNotifierProvider(create: (_) => StopWatchState(),
-            child: Consumer<StopWatchState>(
-              builder: (context, state, _) {
-                return Column(
-                  children: [
-                    FilledButton(onPressed: () {
-                      Provider.of<StopWatchState>(context, listen: false).startClock();
-                    }, child: Text("Start")),
-                    FilledButton(onPressed: () {
-                      Provider.of<StopWatchState>(context, listen: false).stopClock();
-                    }, child: Text("Stop")),
-                    FilledButton(onPressed: () {
-                      Provider.of<StopWatchState>(context, listen: false).resetClock();
-                    }, child: Text("Reset")),
-                    FilledButton(onPressed: () {
-                      Provider.of<StopWatchTheme>(context, listen: false).toggle();
-                    }, child: Text("Change theme")),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(state._stopWatchTimer.elapsed.hoursForStopWatch().toString().padLeft(2, "0")),
-                        Text(":"),
-                        Text(state._stopWatchTimer.elapsed.minutesForStopWatch().toString().padLeft(2, "0")),
-                        Text(":"),
-                        Text(state._stopWatchTimer.elapsed.secondsForStopWatch().toString().padLeft(2, "0")),
-                        Text(":"),
-                        Text(state._stopWatchTimer.elapsed.millisecondsForStopWatch().toString().padLeft(4, "0"))
-                      ],
-                    )
-                  ],
-                );
-              },
-            ),)
-
-          ),
-        );
-      },
-    )
+        child: Consumer<StopWatchTheme>(
+          builder: (context, theme, _) {
+            return MaterialApp(
+              theme: theme.current,
+              home: Scaffold(
+                  appBar: AppBar(),
+                  body: ChangeNotifierProvider(create: (_) => StopWatchState(),
+                    child: Consumer<StopWatchState>(
+                      builder: (context, state, _) {
+                        return Column(
+                          children: [
+                            FilledButton(onPressed: () {
+                              Provider.of<StopWatchState>(context, listen: false).startClock();
+                            }, child: Text("Start")),
+                            FilledButton(onPressed: () {
+                              Provider.of<StopWatchState>(context, listen: false).stopClock();
+                            }, child: Text("Stop")),
+                            FilledButton(onPressed: () {
+                              Provider.of<StopWatchState>(context, listen: false).resetClock();
+                            }, child: Text("Reset")),
+                            FilledButton(onPressed: () {
+                              Provider.of<StopWatchTheme>(context, listen: false).toggle();
+                            }, child: Text("Change theme")),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(state._stopWatchTimer.elapsed.hoursForStopWatch().toString().padLeft(2, "0")),
+                                Text(":"),
+                                Text(state._stopWatchTimer.elapsed.minutesForStopWatch().toString().padLeft(2, "0")),
+                                Text(":"),
+                                Text(state._stopWatchTimer.elapsed.secondsForStopWatch().toString().padLeft(2, "0")),
+                                Text(":"),
+                                Text(state._stopWatchTimer.elapsed.millisecondsForStopWatch().toString().padLeft(4, "0"))
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+              ),
+            );
+          },
+        ),
     );
-
-
   }
 }
