@@ -47,12 +47,18 @@ class MyAppState extends State<MyApp> {
               _stopWatchTimer.stop();
             }, child: Text("Stop")),
             FilledButton(onPressed: () {
-              print(_stopWatchTimer.elapsedMilliseconds);
-            }, child: Text("Show")),
-            FilledButton(onPressed: () {
               _stopWatchTimer.reset();
             }, child: Text("Reset")),
-            Text(_stopWatchTimer.elapsed.inSeconds.toString()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(_stopWatchTimer.elapsed.inHours.toString()),
+                Text(":"),
+                Text(_stopWatchTimer.elapsed.inMinutes.toString()),
+                Text(":"),
+                Text(_stopWatchTimer.elapsed.inSeconds.toString()),
+              ],
+            )
           ],
         ),
       ),
