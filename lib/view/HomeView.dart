@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:stopwatch/StopWatchUtil.dart';
 
 
 class MyApp extends StatefulWidget {
@@ -52,11 +53,11 @@ class MyAppState extends State<MyApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(_stopWatchTimer.elapsed.inHours.toString()),
+                Text(_stopWatchTimer.elapsed.hoursForStopWatch().toString()),
                 Text(":"),
-                Text(_stopWatchTimer.elapsed.inMinutes.toString()),
+                Text(_stopWatchTimer.elapsed.minutesForStopWatch().toString()),
                 Text(":"),
-                Text(_stopWatchTimer.elapsed.inSeconds.toString()),
+                Text(_stopWatchTimer.elapsed.secondsForStopWatch().toString()),
               ],
             )
           ],
