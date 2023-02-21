@@ -69,13 +69,13 @@ class MyAppState extends State<MyApp> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(_stopWatchTimer.elapsed.hoursForStopWatch().toString()),
+                    Text(_stopWatchTimer.elapsed.hoursForStopWatch().toString().padLeft(2, "0")),
                     Text(":"),
-                    Text(_stopWatchTimer.elapsed.minutesForStopWatch().toString()),
+                    Text(_stopWatchTimer.elapsed.minutesForStopWatch().toString().padLeft(2, "0")),
                     Text(":"),
-                    Text(_stopWatchTimer.elapsed.secondsForStopWatch().toString()),
+                    Text(_stopWatchTimer.elapsed.secondsForStopWatch().toString().padLeft(2, "0")),
                     Text(":"),
-                    Text(_stopWatchTimer.elapsed.millisecondsForStopWatch().toString())
+                    Text(_stopWatchTimer.elapsed.millisecondsForStopWatch().toString().padLeft(4, "0"))
                   ],
                 )
               ],
