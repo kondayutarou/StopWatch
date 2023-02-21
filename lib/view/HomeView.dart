@@ -15,6 +15,25 @@ class StopWatchTheme extends ChangeNotifier {
   }
 }
 
+class StopWatchState extends ChangeNotifier {
+  final Stopwatch _stopWatchTimer = Stopwatch();
+
+  void startClock() {
+    _stopWatchTimer.start();
+    Timer.periodic(const Duration(milliseconds: 30), (timer) {
+      notifyListeners();
+    });
+  }
+
+  void stopClock() {
+    _stopWatchTimer.stop();
+  }
+
+  void resetClock() {
+    _stopWatchTimer.reset();
+  }
+}
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -23,23 +42,13 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  late final Stopwatch _stopWatchTimer;
-  late final Timer _timer;
-
   @override
   void initState() {
     super.initState();
-    _stopWatchTimer = Stopwatch();
-    _timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
-      setState(() {
-
-      });
-    });
   }
 
   @override
   void dispose() {
-    _timer.cancel();
     super.dispose();
   }
 
@@ -52,34 +61,40 @@ class MyAppState extends State<MyApp> {
           theme: theme.current,
           home: Scaffold(
             appBar: AppBar(),
-            body: Column(
-              children: [
-                FilledButton(onPressed: () {
-                  _stopWatchTimer.start();
-                }, child: Text("Start")),
-                FilledButton(onPressed: () {
-                  _stopWatchTimer.stop();
-                }, child: Text("Stop")),
-                FilledButton(onPressed: () {
-                  _stopWatchTimer.reset();
-                }, child: Text("Reset")),
-                FilledButton(onPressed: () {
-                  Provider.of<StopWatchTheme>(context, listen: false).toggle();
-                }, child: Text("Change theme")),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            body: ChangeNotifierProvider(create: (_) => StopWatchState(),
+            child: Consumer<StopWatchState>(
+              builder: (context, state, _) {
+                return Column(
                   children: [
-                    Text(_stopWatchTimer.elapsed.hoursForStopWatch().toString().padLeft(2, "0")),
-                    Text(":"),
-                    Text(_stopWatchTimer.elapsed.minutesForStopWatch().toString().padLeft(2, "0")),
-                    Text(":"),
-                    Text(_stopWatchTimer.elapsed.secondsForStopWatch().toString().padLeft(2, "0")),
-                    Text(":"),
-                    Text(_stopWatchTimer.elapsed.millisecondsForStopWatch().toString().padLeft(4, "0"))
+                    FilledButton(onPressed: () {
+                      Provider.of<StopWatchState>(context, listen: false).startClock();
+                    }, child: Text("Start")),
+                    FilledButton(onPressed: () {
+                      Provider.of<StopWatchState>(context, listen: false).stopClock();
+                    }, child: Text("Stop")),
+                    FilledButton(onPressed: () {
+                      Provider.of<StopWatchState>(context, listen: false).resetClock();
+                    }, child: Text("Reset")),
+                    FilledButton(onPressed: () {
+                      Provider.of<StopWatchTheme>(context, listen: false).toggle();
+                    }, child: Text("Change theme")),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(state._stopWatchTimer.elapsed.hoursForStopWatch().toString().padLeft(2, "0")),
+                        Text(":"),
+                        Text(state._stopWatchTimer.elapsed.minutesForStopWatch().toString().padLeft(2, "0")),
+                        Text(":"),
+                        Text(state._stopWatchTimer.elapsed.secondsForStopWatch().toString().padLeft(2, "0")),
+                        Text(":"),
+                        Text(state._stopWatchTimer.elapsed.millisecondsForStopWatch().toString().padLeft(4, "0"))
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
+                );
+              },
+            ),)
+
           ),
         );
       },
